@@ -1,0 +1,7 @@
+<resources>
+    <string name="action_settings">Settings</string>
+    <string name="message_text">Message to User</string>
+    <string name="action_restart">Restart?</string>
+    <string name="surfaceFragment">surfaceFragment</string>
+    <string name="app_name">TouchMoveKotlin</string>
+</resources>
