@@ -2,8 +2,6 @@ package com.touchmove.kotlin;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +12,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.MenuHost;
-import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 
 /**
  * Fragment class to hold our SurfaceView, the SurfaceThread and the SquareSet
@@ -94,12 +87,6 @@ public class SurfaceFragment extends Fragment {
 		return view;
 	}
 
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		MenuHost menuHost= requireActivity();
-	}
-
 	public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
 		if (menuItem.getItemId() == R.id.action_restart) {
 			drawingSurface.restart();
@@ -107,5 +94,4 @@ public class SurfaceFragment extends Fragment {
 		}
 		return false;
 	}
-
 }
