@@ -1,6 +1,5 @@
 package com.touchmove.kotlin;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +11,15 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 
 /**
  * Fragment class to hold our SurfaceView, the SurfaceThread and the SquareSet
@@ -32,28 +40,7 @@ public class SurfaceFragment extends Fragment {
 	 * fragment.
 	 */
 	public SurfaceFragment() {
-		setHasOptionsMenu(true);
-	}
 
-	/**
-	 * Create the menu from our XML file in Layout folder.
-	 */
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_draw, menu);
-	}
-
-	/**
-	 * Handle the user selection of menu items.
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_restart) {
-			drawingSurface.restart();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -65,8 +52,12 @@ public class SurfaceFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+		Toolbar toolbar = view.findViewById(R.id.toolbar);
+		toolbar.setTitle("Touch Move Kotlin");
+		toolbar.inflateMenu(R.menu.menu_draw);
+		toolbar.setOnMenuItemClickListener(this::onMenuItemSelected);
 
 		drawingSurface = (DrawingSurface) view
 				.findViewById(R.id.drawingSurface);
@@ -102,4 +93,19 @@ public class SurfaceFragment extends Fragment {
 
 		return view;
 	}
+
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		MenuHost menuHost= requireActivity();
+	}
+
+	public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+		if (menuItem.getItemId() == R.id.action_restart) {
+			drawingSurface.restart();
+			return true;
+		}
+		return false;
+	}
+
 }

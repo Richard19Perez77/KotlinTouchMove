@@ -1,7 +1,7 @@
 package com.touchmove.kotlin
 
-import androidx.activity.ComponentActivity
 import android.os.Bundle
+import androidx.fragment.app.FragmentActivity
 
 /**
  * Starting point for application, defines layout in the activity_main file.
@@ -10,7 +10,7 @@ import android.os.Bundle
  *
  * Git created https://Richard19Perez77@bitbucket.org/Richard19Perez77/touchmovementdemo.git
  */
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     /**
      * Set the layout from XML file.
      */
