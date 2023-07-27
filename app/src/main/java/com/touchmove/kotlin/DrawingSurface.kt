@@ -24,7 +24,7 @@ class DrawingSurface(
      * The context object allows access to the resources needed and also
      * contains information about the application.
      */
-    var c: Context, attrs: AttributeSet?
+    private var c: Context, attrs: AttributeSet?
 ) : SurfaceView(c, attrs), SurfaceHolder.Callback, OnTouchListener {
     /**
      * The thread that runs the cycle of run and update physics during the
@@ -72,17 +72,6 @@ class DrawingSurface(
         }
     }
 
-    /**
-     *
-     * If we are creating our surface by calling the setContentView in the
-     * MainActivity then you must have a constructor in this class that accepts
-     * two parameters.
-     *
-     * @param con
-     * The application Context.
-     * @param attrs
-     * XML defined attributes can be sent though here.
-     */
     init {
         // register the call back interface
         val holder = holder
@@ -150,7 +139,7 @@ class DrawingSurface(
             try {
                 targetThread!!.join()
                 retry = false
-            } catch (e: InterruptedException) {
+            } catch (_: InterruptedException) {
             }
         }
     }
@@ -220,21 +209,10 @@ class DrawingSurface(
     }
 
     /**
-     * We need to set the flag to recreate our thread here, we want the method
-     * to be lightweight so we wait to create it on touch when animation is
-     * needed.
-     */
-    fun onResume() {
-        if (targetThread!!.state == Thread.State.TERMINATED) {
-            recreateSurfaceThread = true
-        }
-    }
-
-    /**
      * When we pause the thread we will set a flag and send a message to the
      * user.
      */
-    fun onPause() {
+    private fun onPause() {
         if (targetThread != null) {
             targetThread!!.pause()
             targetThread!!.setRunning(false)
