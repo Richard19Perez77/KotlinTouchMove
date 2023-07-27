@@ -47,11 +47,6 @@ public class SquareSet {
 	Paint datePaint = new Paint();
 
 	/**
-	 * Running time counter for user feedback of thread running.
-	 */
-	Date date = new Date();
-
-	/**
 	 * Store the screen sizes for scaling of objects.
 	 */
 	int screenW, screenH;
@@ -105,7 +100,7 @@ public class SquareSet {
 	 * Square line should disperse during this time
 	 */
 	private boolean disperseSquares;
-
+	SimpleDateFormat simpleDateFormat;
 	String formattedDate = "";
 
 	/**
@@ -116,8 +111,8 @@ public class SquareSet {
 		rectPaint.setColor(Color.BLUE);
 		datePaint.setColor(Color.RED);
 		datePaint.setTextSize(35);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-		formattedDate = simpleDateFormat.format(date);
+		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+		formattedDate = simpleDateFormat.format(new Date());
 
 	}
 
@@ -128,16 +123,17 @@ public class SquareSet {
 	 */
 	public void draw(Canvas canvas) {
 		drawCounter++;
+		formattedDate = simpleDateFormat.format(new Date());
 
 		canvas.drawColor(screenColor);
-
-		canvas.drawText("date: " + formattedDate, 0, datePaint.getTextSize(), datePaint);
-		canvas.drawText("squares: " + getRectFs().size(), 0,
-				datePaint.getTextSize() * 2, datePaint);
-		canvas.drawText("draws: " + drawCounter, 0,
-				datePaint.getTextSize() * 3, datePaint);
-		canvas.drawText("touches: " + touchCounter, 0,
-				datePaint.getTextSize() * 4, datePaint);
+		canvas.drawText("Date: " + formattedDate, 20,
+				datePaint.getTextSize() + 10, datePaint);
+		canvas.drawText("Squares: " + getRectFs().size(), 20,
+				datePaint.getTextSize() * 2 + 20, datePaint);
+		canvas.drawText("Draws: " + drawCounter, 20,
+				datePaint.getTextSize() * 3 + 30, datePaint);
+		canvas.drawText("Touches: " + touchCounter, 20,
+				datePaint.getTextSize() * 4 + 40, datePaint);
 
 		// draw rectFs in array
 		drawRectFs(canvas);
@@ -172,7 +168,6 @@ public class SquareSet {
 
 	public void updatePhysics() {
 		screenColor = Color.WHITE;
-		date = new Date();
 		if (createSquare) {
 			createSquare = false;
 			new RectFFactory().execute();
